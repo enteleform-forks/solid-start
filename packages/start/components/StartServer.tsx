@@ -2,10 +2,10 @@ import { ssr } from "solid-js/web";
 import { MetaProvider } from "solid-meta";
 import { RouteDataFunc, Router } from "solid-app-router";
 // @ts-expect-error
-import Root from "~/root";
+import Root from "~/__Main__";
 import { StartProvider } from "./StartContext";
 
-const rootData = Object.values(import.meta.globEager("/src/root.data.(js|ts)"))[0];
+const rootData = Object.values(import.meta.globEager("/__Source__/Root.Data.(js|ts)"))[0];
 const dataFn: RouteDataFunc = rootData ? rootData.default : undefined;
 
 export interface RequestContext {

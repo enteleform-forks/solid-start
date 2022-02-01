@@ -25,11 +25,13 @@
 
 		"files.exclude": {
 			"packages":     true,
+			"examples":     true,
 			"node_modules": true,
 		},
 
 		"search.exclude": {
 			"packages":     true,
+			"examples":     true,
 			"node_modules": true,
 		},
 	},

@@ -10,16 +10,16 @@ import common from "@rollup/plugin-commonjs";
 export default function () {
   return {
     start(config) {
-      import(pathToFileURL(join(config.root, "dist", "index.js")));
+      import(pathToFileURL(join(config.root, "__Generated__", "Distribution", "index.js")));
     },
     async build(config) {
       const __dirname = dirname(fileURLToPath(import.meta.url));
       await vite.build({
         build: {
-          outDir: "./dist/",
+          outDir: "./__Generated__/Distribution/",
           minify: "terser",
           rollupOptions: {
-            input: resolve(join(config.root, "src", `entry-client`)),
+            input: resolve(join(config.root, "__Source__", "__Client__", "__Main__")),
             output: {
               manualChunks: undefined
             }
@@ -31,7 +31,7 @@ export default function () {
           ssr: true,
           outDir: "./.solid/server",
           rollupOptions: {
-            input: resolve(join(config.root, "src", `entry-server`)),
+            input: resolve(join(config.root, "__Source__", "__Server__", "__Main__")),
             output: {
               format: "esm"
             }
@@ -39,7 +39,7 @@ export default function () {
         }
       });
       copyFileSync(
-        join(config.root, ".solid", "server", `entry-server.js`),
+        join(config.root, ".solid", "server", `__Main__.js`),
         join(config.root, ".solid", "server", "app.js")
       );
       copyFileSync(join(__dirname, "entry.js"), join(config.root, ".solid", "server", "index.js"));
@@ -56,7 +56,7 @@ export default function () {
         external: ["undici", "stream/web"]
       });
       // or write the bundle to disk
-      await bundle.write({ format: "esm", dir: join(config.root, "dist") });
+      await bundle.write({ format: "esm", dir: join(config.root, "__Generated__", "Distribution") });
 
       // closes the bundle
       await bundle.close();

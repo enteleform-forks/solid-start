@@ -17,7 +17,7 @@ async function postData(url = "", body = {}) {
 let actionProxy;
 if (isServer) {
   const NAMESPACE = /([^\/\.]+)\.actions/;
-  const actionModules = import.meta.globEager("/src/**/*.actions.(js|ts)");
+  const actionModules = import.meta.globEager("/__Source__/**/*.actions.(js|ts)");
   actionProxy = Object.entries<Record<string, any>>(actionModules).reduce(
     (memo, [name, actions]) => {
       memo[NAMESPACE.exec(name)[1]] = Object.keys(actions).reduce((apis, actionName) => {

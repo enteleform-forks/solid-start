@@ -169,8 +169,8 @@ export default function solidStart(options) {
   options = Object.assign(
     {
       adapter: "solid-start-node",
-      appRoot: "src",
-      routesDir: "routes",
+      appRoot: "__Source__",
+      routesDir: "Routes",
       ssr: true,
       prerenderRoutes: [],
       inspect: true
