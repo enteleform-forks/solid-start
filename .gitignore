@@ -3,7 +3,6 @@ dist/
 example/
 .solid/
 
-.vscode/
 coverage/
 types/
 
