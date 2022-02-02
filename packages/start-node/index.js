@@ -17,7 +17,8 @@ export default function () {
       await vite.build({
         build: {
           outDir: "./__Generated__/Distribution/",
-          minify: "terser",
+					minify: false,
+					//minify: (process.env.NODE_ENV === "production") ? "terser" : false,
           rollupOptions: {
             input: resolve(join(config.root, "__Source__", "__Client__", "__Main__")),
             output: {

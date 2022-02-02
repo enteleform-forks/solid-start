@@ -33,7 +33,8 @@ function solidStartRouter(options) {
               {
                 ssr: isSsr ?? false,
                 root: process.cwd(),
-                minify: process.env.NODE_ENV === "production"
+                minify: false,
+                //minify: process.env.NODE_ENV === "production"
               }
             ]
           ]
@@ -186,7 +187,8 @@ export default function solidStart(options) {
         plugins: [
           [
             babelServerModule,
-            { ssr, root: process.cwd(), minify: process.env.NODE_ENV === "production" }
+            { ssr, root: process.cwd(), minify: false }
+            //{ ssr, root: process.cwd(), minify: process.env.NODE_ENV === "production" }
           ]
         ]
       })
