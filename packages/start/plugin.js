@@ -42,18 +42,26 @@ function solidStartRouter(options) {
       }
 
       if (code.includes("const routes = $ROUTES;")) {
-        const routes = await getRoutes({
-          pageExtensions: [
-            "tsx",
-            "jsx",
-            "js",
-            "ts",
-            ...(options.extensions?.map(s => (Array.isArray(s) ? s[0] : s)).map(s => s.slice(1)) ??
-              [])
-          ]
-        });
+        const routes =
+          options.routes
+          ? ensureRoutesData(await options.routes())
+          : await getRoutes({
+            pageExtensions: [
+              "tsx",
+              "jsx",
+              "js",
+              "ts",
+              ...(options.extensions?.map(s => (Array.isArray(s) ? s[0] : s)).map(s => s.slice(1)) ??
+                [])
+            ]
+          });
 
-        return { code: code.replace("const routes = $ROUTES;", stringifyRoutes(routes, { lazy })) };
+        const stringifiedRoutes =
+          options.stringifyRoutes
+          ? await options.stringifyRoutes(routes)
+          : stringifyRoutes(routes, { lazy })
+
+        return { code: code.replace("const routes = $ROUTES;", stringifiedRoutes) };
       }
     }
   };
@@ -87,6 +95,7 @@ function solidStartBuild(options) {
                 routes: file => {
                   file = file.replace(path.posix.join(root, options.appRoot), "").replace(regex, "");
                   if (!file.includes(`/${options.routesDir}/`)) return "*"; // commons
+                  console.log({"@":"Route", path:("/" + file.replace(`/${options.routesDir}/`, ""))})
                   return "/" + file.replace(`/${options.routesDir}/`, "");
                 }
               })
@@ -115,17 +124,21 @@ function solidStartServer(options) {
         vite.httpServer?.once("listening", async () => {
           const protocol = config.server.https ? "https" : "http";
           const port = config.server.port;
-          const routes = await getRoutes({
-            pageExtensions: [
-              "tsx",
-              "jsx",
-              "js",
-              "ts",
-              ...(options.extensions
-                ?.map(s => (Array.isArray(s) ? s[0] : s))
-                .map(s => s.slice(1)) ?? [])
-            ]
-          });
+
+          const routes =
+            options.routes
+            ? ensureRoutesData(await options.routes())
+            : await getRoutes({
+              pageExtensions: [
+                "tsx",
+                "jsx",
+                "js",
+                "ts",
+                ...(options.extensions
+                  ?.map(s => (Array.isArray(s) ? s[0] : s))
+                  .map(s => s.slice(1)) ?? [])
+              ]
+            });
           const label = `  > Routes: `;
           setTimeout(() => {
             // eslint-disable-next-line no-console
@@ -214,4 +227,23 @@ function remove_html_middlewares(server) {
       server.stack.splice(i, 1);
     }
   }
+}
+
+/**
+ * @param {import('./plugin').RouteRecord} routes
+ * @returns {import('./plugin').RouteRecord}
+ */
+function ensureRoutesData(routes) {
+	const result = {pageRoutes:[]}
+	for (const route of routes.pageRoutes) {
+		result.pageRoutes.push({
+			path: route.path,
+			src: route.src,
+			type: route.type,
+			_id: route._id ?? route.path,
+			componentSrc: route.componentSrc ?? route.src,
+			dataSrc: route.dataSrc,
+		})
+	}
+	return result
 }
