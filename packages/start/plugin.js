@@ -239,10 +239,10 @@ function ensureRoutesData(routes) {
 		result.pageRoutes.push({
 			path: route.path,
 			src: route.src,
-			type: route.type,
 			_id: route._id ?? route.path,
 			componentSrc: route.componentSrc ?? route.src,
 			dataSrc: route.dataSrc,
+			type: route.type ?? "PAGE",
 		})
 	}
 	return result

@@ -16,10 +16,10 @@ export default start;
 export type Route = {
   path: string
   src: string
-  type: "PAGE"
   _id?: string
   componentSrc?: string
   dataSrc?: unknown
+  type?: "PAGE"
 }
 
 export type RouteRecord = {
