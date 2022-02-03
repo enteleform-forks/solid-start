@@ -1,7 +1,6 @@
 {
-  "name": "@enteleform/solid-start-node",
-  "version": "1.0.0",
-  "version_Actual": "0.1.0-v0.1.0-alpha.59.0",
+  "name": "solid-start-node",
+  "version": "0.1.0-v0.1.0-alpha.59.0",
   "main": "./index.js",
   "type": "module",
   "dependencies": {

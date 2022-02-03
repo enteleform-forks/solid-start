@@ -8,6 +8,7 @@
 		{"path":"..",                      "name":"___  ROOT  ___________________"  },
 		{"path":"../packages/start/",      "name":"___  Solid-Start  ______________"},
 		{"path":"../packages/start-node/", "name":"___  Solid-Start-Node  _______"  },
+		//{"path":"../examples/",            "name":"___  Examples  _______________"  },
 	],
 
 
@@ -24,14 +25,16 @@
 		"terminal.integrated.cwd":  "${workspaceFolder:___  ROOT  ___________________}",
 
 		"files.exclude": {
-			"packages":     true,
+			"docs":         true,
 			"examples":     true,
+			"packages":     true,
 			"node_modules": true,
 		},
 
 		"search.exclude": {
-			"packages":     true,
+			"docs":         true,
 			"examples":     true,
+			"packages":     true,
 			"node_modules": true,
 		},
 	},
