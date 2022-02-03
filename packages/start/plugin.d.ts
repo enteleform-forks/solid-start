@@ -6,7 +6,7 @@ export type Options = {
   prerenderRoutes: any[];
   inspect: boolean;
   routes?: RoutesCallback
-  stringifyRoutes?: RoutesCallback
+  stringifyRoutes?: StringifyRoutesCallback
 } & import("vite-plugin-solid").Options;
 import { Plugin } from "vite";
 
